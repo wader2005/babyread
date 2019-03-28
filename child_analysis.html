@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="gbk">
+<head>
+    <meta charset="UTF-8">
+    <title>儿童图书匹配模型</title>
+</head>
+<style type="text/css">
+ul{ margin-left:10px; padding:5px; }
+li{ padding:2px;width：100%}
+label{ height:80px; padding:2px;}
+select{ font-size:40px; width:500px; height:80px;}
+div{border:0px solid #333;  margin-left:10px;}
+input{height:40px; width:400px;}
+.submit{height:80px; width:400px; font-size:40px; }
+.checkbox{ width:50px; padding:2px; }
+</style>
+<body style="font-family:'Microsoft YaHei'; font-size:40px; padding:10px;line-height:2">
+<h2> 儿童图书推荐 </h2>
+
+<div style="background:#eeeeee; padding:10px; color:#999999">
+    <!--max:{{max}}, min:{{min}}-->
+</div>
+<div style="background:#eeeeee; padding:10px; color:#999999">推荐图书：
+                {% for item in booklist  %}
+				<a style="font-size:30px;color:#333333" href='{{item.1}}{{item.2}}'>{{item.0}}</a>
+				{% endfor %}
+</div>
+<div >
+<form action="/character" method="post">
+    {% csrf_token %}
+    <div>
+        <ul><label style="margin-left:10px; width:400px;">年龄(Age requerement)</label>
+        <li>
+        <select id="cage" name="cage">
+            <option value="" selected>无</option>
+            <option value="0.4">4-6月</option>
+            <option value="0.8">8-12月</option>
+            <option value="1" >1</option>
+            <option value="2">2-3</option>
+            <option value="4">4-6</option>
+            <option value="7">7-9</option>
+            <option value="10">10-12</option>
+            <option value="13">13-18</option>
+            <option value="19">19-60</option >
+            <option value="61">60以上</option>
+        </select>
+        </li>
+        </ul>
+    </div>
+
+        <div>
+        <ul>情感需求<label>（Emotional demand,ED)：</label>
+            <li>
+             <select id="emotion" name="emotion">
+            <option value="" selected>无</option>
+            <option value="famly">家庭</option>
+            <option value="grandchildren">祖孙关爱</option>
+            <option value="paternal">父爱</option>
+            <option value="maternal">母爱</option>
+            <option value="brotherhood">兄弟情</option>
+            <option value="sisterhood">姐妹情</option>
+            <option value="classmates">同学情</option >
+            <option value="comrades ">战友情</option>
+            <option value="love">爱情</option>
+        </select>
+            </li>
+        </ul>
+    </div>
+
+    <div>
+        <ul>探求新奇性 <label>（novelty seeking,NS)：</label>
+        <li><input class="checkbox" type="checkbox" name="NS" value="1" />喜刺激</li>
+        <li><input class="checkbox" type="checkbox" name="NS" value="1" />善变</li>
+        <li><input class="checkbox" type="checkbox" name="NS" value="1" />易兴奋</li>
+        <li><input class="checkbox" type="checkbox" name="NS" value="1"/>急性子</li>
+        <li><input class="checkbox" type="checkbox" name="NS" value="1"/>无条理性</li>
+         </ul>
+    </div>
+    <div>
+        <ul>回避伤害性<label>（harm avoidance,HA)：</label>
+        <li><input class="checkbox" type="checkbox" name="HA" value="1"/>谨慎紧张</li>
+        <li><input class="checkbox" type="checkbox" name="HA" value="1"/>担心多</li>
+        <li><input class="checkbox" type="checkbox" name="HA" value="1"/>胆小害怕</li>
+        <li><input class="checkbox" type="checkbox" name="HA" value="1"/>害羞</li>
+        <li><input class="checkbox" type="checkbox" name="HA" value="1"/>易疲劳</li>
+         </ul>
+    </div>
+        <div>
+            <ul>奖赏依赖性 <label>（reward dependence,RD)：</label>
+        <li><input class="checkbox" type="checkbox" name="RD" value="1" />渴望帮助</li>
+        <li><input class="checkbox" type="checkbox" name="RD" value="1"/>取悦他人</li>
+        <li><input class="checkbox" type="checkbox" name="RD" value="1"/>做事坚持</li>
+        <li><input class="checkbox" type="checkbox" name="RD" value="1"/>富于同情心</li>
+        <li><input class="checkbox" type="checkbox" name="RD" value="1"/>敏感</li>
+         </ul>
+    </div>
+        <div>
+            <ul>坚持有恒性<label>（Persistence,PS)：</label>
+        <li><input class="checkbox" type="checkbox" name="PS" value="1"  />勤劳</li>
+        <li><input class="checkbox" type="checkbox" name="PS" value="1"/>努力</li>
+        <li><input class="checkbox" type="checkbox" name="PS" value="1"/>坚持不懈</li>
+        <li><input class="checkbox" type="checkbox" name="PS" value="1"/>有耐心</li>
+        <li><input class="checkbox" type="checkbox" name="PS" value="1"/>倔强</li>
+         </ul>
+    </div>
+        <div>
+            <ul>自我定向性<label>（Self-directedness,SD)：</label>
+        <li><input class="checkbox" type="checkbox" name="SD" value="1"/>内心强大</li>
+        <li><input class="checkbox" type="checkbox" name="SD" value="1"/>非常自信</li>
+        <li><input class="checkbox" type="checkbox" name="SD" value="1"/>有责任感</li>
+        <li><input class="checkbox" type="checkbox" name="SD" value="1"/>目标明确</li>
+        <li><input class="checkbox" type="checkbox" name="SD" value="1"/>领导力强</li>
+         </ul>
+    </div>
+        <div>
+            <ul>合作性 <label>（Cooperativeness,CO)：</label>
+        <li><input class="checkbox" type="checkbox" name="CO" value="1" />和蔼</li>
+        <li><input class="checkbox" type="checkbox" name="CO" value="1"/>宽容</li>
+        <li><input class="checkbox" type="checkbox" name="CO" value="1"/>爱帮助人</li>
+        <li><input class="checkbox" type="checkbox" name="CO" value="1"/>公正</li>
+        <li><input class="checkbox" type="checkbox" name="CO" value="1"/>乐于合作</li>
+         </ul>
+    </div>
+        <div>
+            <ul>自我超越性<label>（Self-transcendence,ST)：</label>
+        <li><input class="checkbox" type="checkbox" name="ST" value="1" />谦虚</li>
+        <li><input class="checkbox" type="checkbox" name="ST" value="1"/>令人满意</li>
+        <li><input class="checkbox" type="checkbox" name="ST" value="1"/>有耐心</li>
+        <li><input class="checkbox" type="checkbox" name="ST" value="1"/>有创造力</li>
+        <li><input class="checkbox" type="checkbox" name="ST" value="1"/>无私</li>
+         </ul>
+    </div>
+
+    <div style="text-align:center">
+		<input class="submit" type="submit" value="提交"/>
+		<div style="width:100%; align:center; color:#999;font-size:12px;">Copy Right 2018-2019 learning.com</div>
+</div>
+</form>
+</div>
+</body>
+</html>
